@@ -3,12 +3,11 @@ package lab.pai.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,22 +19,26 @@ import lab.pai.service.UserService;
 
 @RequestMapping("/user")
 @RestController
+@ComponentScan("lab.pai.service")
 public class UserController {
 
 	@Autowired
 	DelegationService delegationService;
+	
+	@Autowired
 	UserService userService;
 	
 	@PostMapping("registeruser")
     public void registerUser(
-            @RequestParam("companyAddress")String companyAddress,
+    		@RequestParam("companyName")String companyName,
+    		@RequestParam("companyAddress")String companyAddress,
             @RequestParam("companyNip")String companyNip,
             @RequestParam("name")String name,
             @RequestParam("lastName")String lastName,
             @RequestParam("email")String email,
             @RequestParam("password")String password
     ){
-        userService.registerUser( new User(companyAddress,companyNip,name,lastName,email,password) );
+        userService.registerUser( new User(companyName, companyAddress,companyNip,name,lastName,email,password) );
     }
 	
 	@GetMapping("allusers")

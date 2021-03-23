@@ -10,53 +10,61 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Delegation {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long delegationId;
+	@Column(name = "delegationId")
+	private Long delegationId;
+	@Column(name = "description")
 	private String description;
-	@Column(nullable = false)
+	@Column(name = "dateTimeStart", nullable = false)
 	private LocalDateTime dateTimeStart;
-	@Column(nullable = false)
+	@Column(name = "dateTimeStop", nullable = false)
 	private LocalDateTime dateTimeStop;
-	@Column(columnDefinition = "integer default 30")
+	@Column(name = "travelDietAmount", columnDefinition = "integer default 30")
 	private Integer travelDietAmount;
-	@Column(columnDefinition = "integer default 0")
+	@Column(name = "breakfastNumber", columnDefinition = "integer default 0")
 	private Integer breakfastNumber;
-	@Column(columnDefinition = "integer default 0")
+	@Column(name = "dinnerNumber", columnDefinition = "integer default 0")
 	private Integer dinnerNumber;
-	@Column(columnDefinition = "integer default 0")
+	@Column(name = "supperNumber", columnDefinition = "integer default 0")
 	private Integer supperNumber;
+	@Column(name = "transportType")
 	private Transport transportType;
+	@Column(name = "ticketPrice")
 	private int ticketPrice;
+	@Column(name = "autoCapacity")
 	private AutoCapacity autoCapacityl;
+	@Column(name = "km")
 	private int km;
+	@Column(name = "otherTicketPrice")
 	private int otherTicketsPrice;
+	@Column(name = "otherOutlayDesc")
 	private String otherOutlayDesc;
+	@Column(name = "otherOutlayPrice")
 	private int otherOutlayPrice;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private User user;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "userId")
+//    private User user;
 	
 	public Delegation(LocalDateTime dateTimeStart, LocalDateTime dateTimeStop) {
         this.dateTimeStart = dateTimeStart;
         this.dateTimeStop = dateTimeStop;
 	}
-    public Delegation(LocalDateTime dateTimeStart, LocalDateTime dateTimeStop, User user) {
-        this.dateTimeStart = dateTimeStart;
-        this.dateTimeStop = dateTimeStop;
-        this.user = user;
-    }
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+//    public Delegation(LocalDateTime dateTimeStart, LocalDateTime dateTimeStop, User user) {
+//        this.dateTimeStart = dateTimeStart;
+//        this.dateTimeStop = dateTimeStop;
+//        this.user = user;
+//    }
+//	public User getUser() {
+//		return user;
+//	}
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 	public Long getDelegationId() {
 		return delegationId;
 	}

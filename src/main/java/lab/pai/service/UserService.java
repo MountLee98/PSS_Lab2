@@ -2,11 +2,14 @@ package lab.pai.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
 import lab.pai.model.Delegation;
 import lab.pai.model.User;
 
 public interface UserService {
-	void registerUser(User user);
+	User registerUser(User user);
 	List<User> getAllUsers();
 	void changePassword(long userId, String newPassword);
 	boolean deleteUserById(long userId);	

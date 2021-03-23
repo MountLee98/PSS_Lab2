@@ -1,8 +1,10 @@
 package lab.pai.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -19,43 +20,54 @@ public class User {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "iduser")
     private Long userId;
-	@Column(nullable = false)
+	@Column(name = "companyName", nullable = false)
     private String companyName;
-	@Column(nullable = false)
-    private String companyAddress;
-	@Column(nullable = false)
+	@Column(name = "companyAddress", nullable = false)    
+	private String companyAddress;
+	@Column(name = "companyNipe", nullable = false)
     private String companyNip;
-	@Column(nullable = false)
+	@Column(name = "name", nullable = false)
     private String name;    
-	@Column(nullable = false)
+	@Column(name = "lastName", nullable = false)
     private String lastName;
-	@Column(nullable = false)
+	@Column(name = "email", nullable = false)
     private String email;
-	@Column(nullable = false)
+	@Column(name = "password", nullable = false)
     private String password;
-    @Column(columnDefinition = "boolean default true")
+    @Column(name = "status", columnDefinition = "boolean default true")
     private Boolean status;
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "registrationName", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime registrationDate; 
-    @Column(columnDefinition = "role default role_user")
-    @ManyToMany(fetch = FetchType.LAZY)
+//    @Column(columnDefinition = "role default role_user")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "roleId")
+    @Column(name = "role")
     private List<Role> role;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "delegationId")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Column(name = "delegation")
     private List<Delegation> delegation;
     
+    public User(){
+        delegation = new ArrayList<>();
+        role = new ArrayList<>();
+    }
     
-    public User(String companyAddress, String companyNip, String name, String lastName, String email,
+    public User(String companyName, String companyAddress, String companyNip, String name, String lastName, String email,
 			String password) {
-        this.companyAddress = companyAddress;
+    	this.companyName = companyName;
+    	this.companyAddress = companyAddress;
         this.companyNip = companyNip;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        
+        delegation = new ArrayList<>();
+        role = new ArrayList<>();
 	}
+
 	public Long getUserId() {
 		return userId;
 	}
